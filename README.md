@@ -64,11 +64,11 @@ podman pull docker.io/dpage/pgadmin4
 Create and run postgres container
 
 ```bash
-podman run -p <runningport>:5432 --name <container name> -e POSTGRES_PASSWORD=<password> postgres
+podman run -p <runningport>:5432 --name <container name> -e POSTGRES_PASSWORD=<password> -e POSTGRES_DB=<database name> postgres
 ```
 
 ```bash
-podman run -p 8000:5432 --name pg -e POSTGRES_PASSWORD=pasword123 postgres
+podman run -p 8000:5432 --name pg -e POSTGRES_PASSWORD=pasword123 -e POSTGRES_DB=users postgres
 ```
 
 Create and run pgadmin container
