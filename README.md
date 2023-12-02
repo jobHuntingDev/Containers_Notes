@@ -15,7 +15,7 @@ apt install podman
 ### Search for a registry
 
 ```
-podman search <containser_registry><image_name>
+podman search <containser_registry/image_name>
 ```
 
 ### Download an image from a registry
@@ -34,7 +34,7 @@ podman images
 
 ### Create and run a new container from an image
 
--it: tells podman to allocate a virtual terminal session within the container. 
+-it: tells podman to allocate a virtual terminal session within the container.
 --rm: To remove the container after use, considered best practice
 
 ```
@@ -125,3 +125,26 @@ podman run -p 8001:80 --name pgadmin -e PGADMIN_DEFAULT_EMAIL="londa@gmail.com" 
 Then log onto pg admin by visiting: localhost:8001/, connect the database to check that everythin is fully operational
 
 ## Building a Container Image
+
+Images are made by creating a dockerfile.The DockerFile being a script that contain instructions on how to build a container image.
+
+### Commands
+
+Build a container image using the Dockerfile in the current working directory.
+The '-t' flag specifies the name of the image.
+
+```
+podman build -t <image_name>
+```
+
+Run a container with the built image
+
+```
+podman run --name <container_name> -p 8080:8080 <image_name>:<tag>
+```
+
+### Example
+
+Building a node script runner
+
+...To be continued
