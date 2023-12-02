@@ -1,84 +1,127 @@
-# Working with containers
+# Podman Notes
 
-## Install Podman
+Podman is a daemon-less, open-source, Linux-native tool designed to make it easy to find, run, build, share, and deploy applications using OCI(Open Container Initiative) containers and container images.
 
-```bash
-sudo apt-get -y install podman
-```
-
-## Working with podman
-
-**Download/Pull an image**
+## Installing podman
 
 ```
-podman pull ghcr.io/rwxrob/ws-skilstak
+apt install podman
 ```
 
-**Create a podman machine:**
+## Registry settings
+
+## Image commands
+
+### Search for a registry
 
 ```
-podman machine init
+podman search <containser_registry><image_name>
 ```
 
-**Start the podman machine:**
+### Download an image from a registry
 
 ```
-podman machine start
+podman pull <image_name>
 ```
 
-**List podman machines:**
-
-```
-podman machine list
-```
-
-**View all your images:**
+### List pulled images
 
 ```
 podman images
 ```
 
-**Creating the container**
+## Container commands
+
+### Create and run a new container from an image
+
+-it: tells podman to allocate a virtual terminal session within the container. 
+--rm: To remove the container after use, considered best practice
 
 ```
-podman run -it --hostname host_name --name container_name -v shared://shared ws-skilstak
+podman run -it --rm <image_name>
 ```
 
-**Run the container:**
+### Show all container currently running
 
 ```
-podman start -a container_name
+podman ps
+``` 
+
+## Show all containers
+
+```
+podman ps -a
 ```
 
-## Building a postgress container
+### Start a container
+
+```
+podman start <container_name>
+```
+
+### Stop a container
+
+```
+podman stop <continer_name>
+```
+
+### Remove the container
+
+```
+podman rm <container_name>
+```
+
+### Remove the container image
+
+```
+podman rmi <container_image>
+```
+
+### Display low-level information
+
+```
+podman inspect <container_name>
+```
+
+### List all ports for the container
+
+```
+podman port <container_name>
+```
+
+## Example
+
+### Building a postgress container
 
 Creating a postgres container instance and connecting with a pgadmin instance
 
 Pull images:
 
-```bash
+```
 podman pull docker.io/library/postgres
 podman pull docker.io/dpage/pgadmin4
 ```
 
 Create and run postgres container
 
-```bash
+```
 podman run -p <runningport>:5432 --name <container name> -e POSTGRES_PASSWORD=<password> -e POSTGRES_DB=<database name> postgres
 ```
 
-```bash
+```
 podman run -p 8000:5432 --name pg -e POSTGRES_PASSWORD=pasword123 -e POSTGRES_DB=users postgres
 ```
 
 Create and run pgadmin container
 
-```bash
+```
 podman run -p <runningport>:80 --name <container name> -e PGADMIN_DEFAULT_EMAIL=<email> -e PGADMIN_DEFAULT_PASSWORD=<password> dpage/pgadmin4
 ```
 
-```bash
+```
 podman run -p 8001:80 --name pgadmin -e PGADMIN_DEFAULT_EMAIL="londa@gmail.com" -e PGADMIN_DEFAULT_PASSWORD=password123 dpage/pgadmin4
 ```
 
 Then log onto pg admin by visiting: localhost:8001/, connect the database to check that everythin is fully operational
+
+## Building a Container Image
